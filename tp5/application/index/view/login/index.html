@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="__STATIC__/bs/css/style.css">
+
+
+
+</head>
+<body>
+<div class="container">
+    <div class="form row">
+        <div class="form-horizontal col-md-offset-3" id="login_form">
+            <h3 class="form-title">LOGIN</h3>
+            <div class="col-md-9">
+
+                    <div class="form-group">
+                        <i class="fa fa-user fa-lg"></i>
+                        <input class="form-control required" type="text" placeholder="Username" id="username" name="username" autofocus="autofocus" maxlength="20"/>
+                    </div>
+                    <div class="form-group">
+                        <i class="fa fa-lock fa-lg"></i>
+                        <input class="form-control required" type="password" placeholder="Password" id="password" name="password" maxlength="8"/>
+                    </div>
+
+                    <div class="form-group">
+                            <i class="fa"></i>
+                            <input class="form-control required" type="" placeholder="请输入验证码" id="" name="code" autofocus="autofocus" maxlength="5"/>
+                            <i class="fa">
+
+                                <img style="width: 200px;height:50px;display: inline-block;float: right;" class="form-control required"  src="{:captcha_src()}" alt="captcha" onclick="this.src='{:captcha_src()}'"/>
+                            </i>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox">
+                            <i class="fa">
+                            <input id="remember" type="checkbox" name="remember" value="1"/>1小时免登陆
+                            </i>
+                        </label>
+                    </div>
+                    <div class="form-group col-md-offset-9">
+                        <button id="btn" class="btn btn-success pull-right">登录</button>
+                    </div>
+
+                <div class="form-group col-md">
+                    <a href="register" class="btn btn-success pull-right">注册</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("#btn").click(function () {
+         var username = $(':input[name="username"]').val();
+        var password = $(':input[name="password"]').val();
+        var code = $(':input[name="code"]').val();
+        var remember = $("#remember").get(0).checked;
+        var user = new RegExp("[~'!@#$%^&*()-+_=:]")
+        //存在特殊字符则alert，否则提交后端
+         if (user.test($(':input[name="username"]').val())) {
+            alert("存在非法字符")
+        // }else {
+
+         }else {
+            //post请求到服务端
+             $.post("{:url('login/check')}", {
+                 username: username,
+                 password: password,
+                 code: code,
+                 remember: remember
+             }, function (data) {
+                 if(data==1){
+                 window.location.href="http://www.tp.com/User";
+                 }else {
+                     alert(data);
+                 };
+             });
+         };
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>register</title>
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div>
+    <div>
+    &emsp;*用户名：
+    <input type="text" name = "username" id="username">
+    <font color="red" id="fontname">*</font>
+    </div>
+    <div>
+        &emsp;&emsp;*密码：
+        <input type="password" name="password" id="password">
+        <font color="red" id="fontpass">*</font>
+    </div>
+    <div>
+        *确认密码：
+        <input type="password" name="repassword" id="repassword"">
+    </div>
+    <div>
+        &emsp;*状态：
+        <input type="radio" name="status" checked  value="0"> 正常
+        <input type="radio" name="status"value="1">禁用
+    </div>
+    <div>
+        &emsp;*手机号：<input onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"  name="CellPhone" maxlength="11" placeholder="手机号">
+        <font color="red" id="fontCell">*</font>
+    </div>
+        <input id="zj" type="submit" value="提交">
+        <input id="reset" type="reset" value="重置">
+</div>
+
+<script>
+$("#zj").click(function () {
+    var username = $(':input[name="username"]').val();
+    var password = $(':input[name="password"]').val();
+    var repassword = $(':input[name="repassword"]').val();
+    var CellPhone = $(':input[name="CellPhone"]').val();
+    var status = $(':input[name="status"]').val();
+    //过滤特殊字符
+    var user = new RegExp("[~'!@#$%^&*()-+_=:]");
+    if (user.test($(':input[name="username"]').val())) {
+        alert("用户名存在非法字符")
+        }else {
+        //判断手机号是否合法
+        if (CellPhone.length==11){
+            //post请求到服务端
+            $.post("{:url('login/insert')}", {
+                username: username,
+                password: password,
+                repassword: repassword,
+                CellPhone: CellPhone,
+                status: status
+            }, function (data) {
+                switch (data){
+                    case "1":
+                        $("#fontname").html("<font color=\"red\">您输入的用户名存在！请重新输入！</font>");
+                        break;
+                    case "2":
+                        $("#fontname").html("<font color=\"red\">您输入的用户名不在6-12间！请重新输入！</font>");
+                        break;
+                    case "3":
+                        $("#fontpass").html("<font color=\"red\">您输入的密码不一致，请重新输入！</font>");
+                        break;
+                    case "4":
+                        $("#fontpass").html("<font color=\"red\">请输入密码</font>");
+                        break;
+                    case "5":
+                        $("#fontCell").html("<font color=\"red\">您输入的手机号被绑定！请重新输入！</font>");
+                        break;
+                    case "6":
+                        alert("注册失败");
+                        break;
+                    case "7":
+                        alert("注册成功");
+                        window.location.href="http://www.tp.com/User";
+                        break;
+                    case "0":
+                        $("#fontname").html("<font color=\"red\">请输入的用户名</font>");
+                        break;
+                };
+            });
+        }else {
+            $("#fontCell").html("<font color=\"red\">您输入的手机号有误！请重新输入！</font>");
+        };
+    };
+});
+</script>
+
+</body>
+</html>

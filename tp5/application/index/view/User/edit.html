@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="__STATIC__/bs/css/bootstrap.min.css">
+    <script src="__STATIC__/bs/js/jquery.min.js"></script>
+    <script src="__STATIC__/bs/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="__STATIC__/bs/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <button class="btn btn-success">修改表</button>
+                <a href="/User" class="btn btn-danger">查看表</a>
+            </div>
+            <div class="panel-body">
+                <form action="/User/{$data.id}" method="post">
+                    <div class="form-group">
+                        <input type="hidden" name="_method" value="put">
+                        <label for="">联系人</label>
+                        <input placeholder="请输入姓名+手机" type="text" name="name1" class="form-control" value="{$data.name1}" id="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">联系人</label>
+                        <input placeholder="请输入姓名+手机" type="text" name="name2" class="form-control" value="{$data.name2}" id="">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="提交" class="btn btn-success">
+                        <input type="reset" value="重置" class="btn btn-danger">
+                    </div>
+
+                </form>
+              
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

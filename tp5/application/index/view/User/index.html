@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="__STATIC__/bs/css/bootstrap.min.css">
+    <script src="__STATIC__/bs/js/jquery.min.js"></script>
+    <script src="__STATIC__/bs/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="__STATIC__/bs/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <button class="btn btn-success">页面</button>
+                <a href="/User/create" class="btn btn-danger">添加人员</a>
+                <div class="dropdown nav nav-pills pull-right">
+                    <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">用户
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu nav nav-pills pull-right" role="menu" aria-labelledby="dropdownMenu1">
+                        <li>
+                            <a href="#" class="btn-inverse">{$Request.session.user_name}</a>
+                        </li>
+                        <li>
+                            <a href="/index/Login/quit" class="btn btn-danger">退出</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table class="table tabler-bordered table-hoverer">
+                    <th> 日期</th>
+                    <th>联系人</th>
+                    <th>联系人</th>
+                    {volist name="data" id="value"}
+                    <tr>
+                        <td>{$value.id}</td>
+                        <td>{$value.name1}</td>
+                        <td>{$value.name2}</td>
+                        <td><a href="/User/{$value.id}/edit">修改</a></td>
+                        <td>
+                            <form action="/user/{$value.id}" method="post">
+                                <input type="hidden" name="_method" value="delete">
+                                <button>删除</button>
+                            </form>
+                        </td>
+                        <td></td>
+                    </tr>
+                    {/volist}
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
